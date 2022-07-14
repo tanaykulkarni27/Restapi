@@ -4,13 +4,13 @@ from .models import BlogPost
 from .serializer import PostSerializer
 
 class RudAPIView(mixins.CreateModelMixin,generics.ListAPIView): #Retrieve update destroy 
-    lookup_fielf = 'pk'
+    lookup_field = 'id'
     serializer_class = PostSerializer
-    # queryset = BlogPost.objects.all()
+    queryset = BlogPost.objects.all()
     def get_queryset(self):
         return BlogPost.objects.all()
     def perform_create(self,serializer):
-        serializer.save(user = self.request.user)
+        serializer.save()
     def post(self,req,*args,**kwargs):
         return self.create(req,*args,**kwargs)
 class RudView(generics.RetrieveUpdateDestroyAPIView): #Retrieve update destroy 

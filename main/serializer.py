@@ -5,7 +5,9 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogPost
         fields = ('__all__')
+
     def validate_title(self,value):
-        x = BlogPost.objects.all().filter(title = value)
-        if x:
+        x = BlogPost.objects.filter(title__iexact = value)
+        if x.exists():
             raise serializers.ValidationError("Title should be unique")
+        return value
